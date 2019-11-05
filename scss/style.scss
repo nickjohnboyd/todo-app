@@ -41,13 +41,13 @@ body {
                 display: flex;
                 justify-content: flex-end;
 
-                #add-btn {
+                .add-list {
                     margin: 10px 30px 0 0;
                     color: $light-grey;
                 }
             }
         }
-        #right {
+        .right {
             width: 80%;
             height: 800px;
             box-shadow: -2px 0px 2px 0 rgba(0,0,0,.08);

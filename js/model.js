@@ -1,21 +1,28 @@
-let mylists = new ListCollection();
-
-function ListCollection() {
-    this.collection = [];
-    this.add = function(listName) {
+class ListCollection {
+    constructor() {
+        this.collection = [];   
+    }
+    add(listName) {
         this.collection.push(new List(listName));
     }
 }
 
-function List(name) {
-    this.collection = [];
-    this.name = name;
-    this.add = function(name, id) {
+class List {
+    constructor(name) {
+        this.collection = [];
+        this.name = name;
+    }
+    add(name, id) {
         this.collection.push(new ListItem(name, id));
     }
 }
 
-function ListItem(name, id) {
-    this.name = name;
-    this.id = id;
+class ListItem {
+    constructor(name, id) {
+        this.name = name;
+        this.id = id;
+    }
 }
+
+
+let myLists = new ListCollection();

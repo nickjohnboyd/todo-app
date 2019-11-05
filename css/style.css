@@ -29,10 +29,10 @@ body {
       .container .main .left .new-list {
         display: flex;
         justify-content: flex-end; }
-        .container .main .left .new-list #add-btn {
+        .container .main .left .new-list .add-list {
           margin: 10px 30px 0 0;
           color: #a3a3a3; }
-    .container .main #right {
+    .container .main .right {
       width: 80%;
       height: 800px;
       box-shadow: -2px 0px 2px 0 rgba(0, 0, 0, 0.08); }
