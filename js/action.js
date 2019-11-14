@@ -225,14 +225,6 @@ function printPage() {
 }
 
 
-
-
-
-
-
-
-
-
 // function btnToInput() {
 //     // setTimeout(function() {
 //         let btnCont = $(".add-list-btn-cont");
