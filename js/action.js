@@ -43,7 +43,6 @@ function saveLists() {
 function getLists() {
     let stringMyLists = localStorage.getItem("myLists");
     let myStoredLists = JSON.parse(stringMyLists);
-    console.log(myStoredLists);
 
     if(myStoredLists == null) {
         return;
@@ -140,6 +139,15 @@ function printPage() {
     getLists();
     $(".all-lists").html("");
 
+    if(myLists.collection.length == 0) {
+        $(".content").append(`
+            <div class="start-cont">
+				<div class="start-info">Minimalist Todo. Enough said.</div>
+				<div class="start-info">Press plus to begin with your first list.</div>
+			</div>
+        `);
+    }
+
     for (let i = 0; i < myLists.collection.length; i++) {
         let theList = myLists.collection[i];
         let listItems = "";
@@ -155,7 +163,7 @@ function printPage() {
                 <div class="item" id="${theItem.id}">
                     <div class="item-start">
                         <i class="far fa-square" onclick="addCompletedItems(${i}, ${j})"></i>
-                        <div class="item-name" contenteditable="true">${itemName}</div>
+                        <div class="item-name" contenteditable="false">${itemName}</div>
                     </div>
                     <i class="fas fa-minus" onclick="delItem(${i}, ${j})"></i>
                 </div>
@@ -170,9 +178,9 @@ function printPage() {
                 <div class="item checked-off" id="${theItem.id}">
                     <div class="item-start">
                         <i class="far fa-check-square" onclick="addCompletedItems(${i}, ${g})"></i>
-                        <div class="item-name" contenteditable="true">${itemName}</div>
+                        <div class="item-name" contenteditable="false">${itemName}</div>
                     </div>
-                    <i class="fas fa-minus" onclick="delItem(${i}, ${g})"></i>
+                    <i class="fas fa-minus""></i>
                 </div>
             `;
         }
@@ -192,7 +200,7 @@ function printPage() {
                         <i class="fas fa-times" onclick="delList(${i})"></i>
                     </div>               
                     <div class="list-title">
-                        <div class="list-name" contenteditable="true">${theList.name}</div>
+                        <div class="list-name" contenteditable="false">${theList.name}</div>
                     </div>
                     <div class="item-cont">
                         <div class="add-item-cont">
