@@ -1,0 +1,158 @@
+@import "_global";
+
+body {
+    margin: 0;
+    padding: 0;
+    // font-family: 'Heebo', sans-serif;
+    // font-family: 'Cabin', sans-serif;
+    font-family: 'Noto Sans', sans-serif;
+}
+
+.main {
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        height: 60px;
+        background-color: $secondary;
+        color: $white;
+        padding: 10px;
+
+        .h-title {
+            font-size: 14px;
+        }
+        .add-list-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: $white;
+            color: $dark-grey;
+            width: 200px;
+            height: 50px;
+            border-radius: 7px;
+            outline: none;
+
+            .fa-plus {
+                font-size: 18px;
+            }
+        }
+        .dev-credit {
+            display: flex;
+            align-items: center;
+
+            .dev-name {
+                font-size: 14px;
+                margin-right: 8px;
+            }
+            .dev-copyright {
+                font-size: 14px;
+            }
+        }
+        
+    }
+    .content {
+
+        .all-lists {
+            margin-top: 20px;
+
+            .list {
+                border: 2px solid $secondary;
+                border-radius: 5px;
+                padding: 15px 15px;
+                margin-bottom: 20px;
+
+                .del-list {
+                    width: 100%;
+                    display: flex;
+                    justify-content: flex-end;
+                    font-size: 14px;
+
+                    .fa-times {
+                        padding: 5px;
+                        cursor: pointer;
+                    }
+                }
+                .list-title {
+                    font-size: 20px;
+                    margin-bottom: 15px;
+                    font-weight: bold;
+                    cursor: text;
+                }
+                .item-cont {
+
+                    .add-item-cont {
+                        margin-bottom: 15px;
+                    }
+                    .all-items {
+
+                        .item {
+                            display: flex;
+                            align-items: center;
+                            justify-content: space-between;
+                            padding: 10px;
+                            margin-bottom: 10px;
+                            border-radius: 5px;
+
+                            .item-start {
+                               display: flex;
+                               justify-content: center;
+                               align-items: center;
+
+                               .item-name {
+                                   margin-left: 20px;
+                               }
+                            }
+                        }
+
+                        .completed {
+
+                            .items-completed {
+                                margin: 40px 0 20px 0;
+                            }
+                            .remove-completed {
+
+                                .rm-completed-btn {
+                                    border-radius: 5px;
+                                    outline: none;
+                                    font-size: 15px;
+                                    padding: 5px 10px;
+                                }
+                            }
+                        }
+                        .checked-off {
+                            background-color: $dark-grey;
+                            color: $light-grey;
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
+    .add-list-modal {
+
+        .add-list-cont {
+            display: flex;
+            width: 100%;
+
+            .add-list {
+                margin: 15px 0;
+            }
+        }
+    }
+}
+
+
+
+
+// textarea:focus, input:focus, input[type]:focus, .uneditable-input:focus {   
+//     // border-color: $light-grey;
+//     // box-shadow: 0 1px 1px rgba(163, 163, 163, 0.075) inset, 0 0 8px rgba(163, 163, 163, 0.6);
+//     // outline: 0 none;
+
+//     border-color: rgba(0, 205, 255, 0.8);
+//     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(0, 205, 205, 0.8);
+//     outline: 0 none;
+// }
