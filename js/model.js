@@ -12,8 +12,8 @@ class List {
         this.collection = [];
         this.name = name;
         this.id = id;
-        this.display = "none";
-        this.active = true;
+        this.completed = false;
+        this.completedItems = [];
     }
     add(name, id) {
         this.collection.push(new ListItem(name, id));

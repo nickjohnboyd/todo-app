@@ -1,12 +1,16 @@
-let id = 0;
-
 function addList(event, listName) {
     switch(event.which) {
-        case 13: 
+        case 13:
+            $(".add-list-modal").modal('hide');
+            if(listName == "") {
+                break;
+            }
             myLists.add(listName);
             $(".add-list").val("");
             printPage();
-            $(".add-item").focus();
+            setTimeout(function(){
+                $(".add-item").focus();
+            }, 400)
             break;
     }
 }
@@ -17,56 +21,153 @@ function addItem(event, itemName, i) {
             myLists.collection[i].add(itemName);
             $(".add-item").val("");
             printPage();
-            $(".add-item").focus();
+            $("#list" + i).find(".add-item").focus();
             break;
     }
 }
 
-function delList() { 
 
+function delList(list) {
+    for(let i = 0; i < myLists.collection.length; i++) {
+        if (i == list) {
+            $("#list" + i).css("background-color", "#00cdff");
+            $("#list" + i).slideUp("1000");
+            myLists.collection.splice(list, 1);
+        }
+    }
+    setTimeout(function(){
+        printPage();
+    }, 500);
 }
 
-function delItem() {
-
+function delItem(list, item) {
+    for(let i = 0; i < myLists.collection.length; i++) {
+        let theList = myLists.collection[i];
+        if(i == list) {
+            for(let j = 0; j < theList.collection.length; j++) {
+                if(j == item) {
+                    $("#list" + i + "item" + j).css("background-color", "#ff4545");
+                    $("#list" + i + "item" + j).slideUp("1000");
+                    theList.collection.splice(item, 1);
+                }
+            }
+        }
+    }
+    setTimeout(function(){
+        printPage();
+    }, 500);
 }
+
+
+function addCompletedItems(list, item) {
+    for(let i = 0; i < myLists.collection.length; i++) {
+        let theList = myLists.collection[i];
+        if(i == list) {
+            for(let j = 0; j < theList.collection.length; j++) {
+                if(j == item) {
+                    $("#list" + i + "item" + j).css("background-color", "#4ef542");
+                    $("#list" + i + "item" + j).slideUp("1000");
+                    let completedItem = theList.collection.splice(item, 1);
+                    theList.completedItems.push(completedItem[0]);
+                }
+            }
+        }
+    }
+    setTimeout(function(){
+        printPage();
+    }, 500);
+}
+
+function delCompletedItems(list) {
+    for(let i = 0; i < myLists.collection.length; i++) {
+        let theList = myLists.collection[i];
+        if(i == list) {
+            theList.completedItems = [];
+            $("#list" + i).find(".completed").slideUp("1000");
+        }
+    }
+    setTimeout(function(){
+        printPage();
+    }, 500);
+}
+
 
 function printPage() {
-    $(".list-group").html("");
-    $(".items").html("");
+    $(".all-lists").html("");
 
     for (let i = 0; i < myLists.collection.length; i++) {
         let theList = myLists.collection[i];
         let listItems = "";
+        let completed = "";
+        let removeCompleted = "";
+        theList.id = `list${i}`;
 
         for (let j = 0; j < theList.collection.length; j++) {
-            let itemName = theList.collection[j].name;
+            let theItem = theList.collection[j];
+            let itemName = theItem.name;
+            theItem.id = `list${i}item${j}`;
             listItems += `
-                <div class="item">
-                    <div class="item-name" contenteditable="true" onclick="">${itemName}</div>
-                    <i class="fas fa-minus"></i>
+                <div class="item" id="${theItem.id}">
+                    <div class="item-start">
+                        <i class="far fa-square" onclick="addCompletedItems(${i}, ${j})"></i>
+                        <div class="item-name" contenteditable="true">${itemName}</div>
+                    </div>
+                    <i class="fas fa-minus" onclick="delItem(${i}, ${j})"></i>
                 </div>
             `;
         }
 
-        $(".all-lists").append(`
-            <div class="col-sm list">
-                <div class="list-title">
-                    <div class="list-name" contenteditable="true">${theList.name}</div>
-                </div>
-                <div class="item-cont" id="${theList.id}">
-                    <div class="new-item">
-                        <input type="text" class="add-item" onkeyup="addItem(event, this.value, ${i})">
+        for (let g = 0; g < theList.completedItems.length; g++) {
+            let theItem = theList.completedItems[g];
+            let itemName = theItem.name;
+            theItem.id = `completed-list${i}item${g}`;
+            completed += `
+                <div class="item checked-off" id="${theItem.id}">
+                    <div class="item-start">
+                        <i class="far fa-check-square" onclick="addCompletedItems(${i}, ${g})"></i>
+                        <div class="item-name" contenteditable="true">${itemName}</div>
                     </div>
-                    <div class="item-group">
-                        ${listItems}
+                    <i class="fas fa-minus" onclick="delItem(${i}, ${g})"></i>
+                </div>
+            `;
+        }
+
+        if(theList.completedItems.length > 0) {
+            removeCompleted += `
+                <button type="button" class="rm-completed-btn" onclick="delCompletedItems(${i})">
+                    Clear Completed
+                </button>
+            `;
+        }
+
+        $(".all-lists").append(`
+            <div class="row justify-content-center">
+                <div class="col-11 list" id="${theList.id}">
+                    <div class="del-list">
+                        <i class="fas fa-times" onclick="delList(${i})"></i>
+                    </div>               
+                    <div class="list-title">
+                        <div class="list-name" contenteditable="true">${theList.name}</div>
+                    </div>
+                    <div class="item-cont">
+                        <div class="add-item-cont">
+                            <input type="text" class="add-item" onkeyup="addItem(event, this.value, ${i})">
+                        </div>
+                        <div class="all-items">
+                            <div class="items-todo">
+                                ${listItems}
+                            </div>
+                            <div class="completed">
+                                <div class="items-completed">
+                                    ${completed}
+                                </div>
+                                <div class="remove-completed">${removeCompleted}</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         `);
-
-        // $(".items").append(`
-            
-        // `); 
     }
 }
 
@@ -77,28 +178,15 @@ function printPage() {
 
 
 
-// function printItems(index, theList) {
 
-//     let listItems = "";
 
-//     for (let i = 0; i < theList.collection.length; i++) {
-//         let itemName = theList.collection[index].name;
-//         listItems += `
-//             <div class="item">
-//                 <div class="item-name" contenteditable="true" onclick="">${itemName}</div>
-//                 <i class="fas fa-minus"></i>
-//             </div>
-//         `;
-//     }
-
-//     $(".items").append(`
-//         <div class="item-cont" id="${theList.id}">
-//             <div class="new-item">
-//                 <input type="text" class="add-item" onkeyup="addItem(event, this.value, ${index})">
-//             </div>
-//             <div class="item-group">
-//                 ${listItems}
-//             </div>
-//         </div>
-//     `); 
+// function btnToInput() {
+//     // setTimeout(function() {
+//         let btnCont = $(".add-list-btn-cont");
+//         btnCont.html("");
+//         btnCont.append(`
+//             <input type="text" class="add-list" onkeyup="addList(event, this.value)">
+//         `);
+//         $(".add-list").focus();
+//     // }, 200)
 // }
