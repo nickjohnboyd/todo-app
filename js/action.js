@@ -140,12 +140,13 @@ function printPage() {
     $(".all-lists").html("");
 
     if(myLists.collection.length == 0) {
-        $(".content").append(`
-            <div class="start-cont">
-				<div class="start-info">Minimalist Todo. Enough said.</div>
-				<div class="start-info">Press plus to begin with your first list.</div>
-			</div>
-        `);
+        let startInfo = `
+            <div class="start-info">Welcome to Minimalist Todo.</div>
+            <div class="start-info">Press the add button to begin with your first list.</div>
+        `;
+        $(".start-cont").append(startInfo);
+    } else {
+        $(".start-cont").remove();
     }
 
     for (let i = 0; i < myLists.collection.length; i++) {
