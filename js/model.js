@@ -12,11 +12,13 @@ class List {
         this.collection = [];
         this.name = name;
         this.id = id;
-        this.completed = false;
         this.completedItems = [];
     }
     add(name, id) {
         this.collection.push(new ListItem(name, id));
+    }
+    addCompleted(item) {
+        this.completedItems.push(item);
     }
     activate() {
         this.active = true;

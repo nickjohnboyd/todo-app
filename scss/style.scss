@@ -15,7 +15,7 @@ body {
         justify-content: space-between;
         align-items: center;
         width: 100%;
-        height: 60px;
+        height: 70px;
         background-color: $secondary;
         color: $white;
         padding: 10px;
@@ -43,11 +43,11 @@ body {
             align-items: center;
 
             .dev-name {
-                font-size: 14px;
+                font-size: 12px;
                 margin-right: 8px;
             }
             .dev-copyright {
-                font-size: 14px;
+                font-size: 12px;
             }
         }
         
@@ -75,7 +75,7 @@ body {
                     }
                 }
                 .list-title {
-                    font-size: 20px;
+                    font-size: 22px;
                     margin-bottom: 15px;
                     font-weight: bold;
                     cursor: text;

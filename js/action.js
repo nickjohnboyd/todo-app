@@ -7,6 +7,7 @@ function addList(event, listName) {
             }
             myLists.add(listName);
             $(".add-list").val("");
+            saveLists();
             printPage();
             setTimeout(function(){
                 $(".add-item").focus();
@@ -15,15 +16,54 @@ function addList(event, listName) {
     }
 }
 
+function addListFocus() {
+    setTimeout(function(){
+        $(".add-list").focus();
+    }, 500)
+}
+
 function addItem(event, itemName, i) {
     switch(event.which) {
         case 13:
             myLists.collection[i].add(itemName);
             $(".add-item").val("");
+            saveLists();
             printPage();
             $("#list" + i).find(".add-item").focus();
             break;
     }
+}
+
+
+function saveLists() {
+    let stringMyLists = JSON.stringify(myLists);
+    localStorage.setItem("myLists", stringMyLists);
+}
+
+function getLists() {
+    let stringMyLists = localStorage.getItem("myLists");
+    let myStoredLists = JSON.parse(stringMyLists);
+    console.log(myStoredLists);
+
+    if(myStoredLists == null) {
+        return;
+    }
+    myLists = new ListCollection();
+    for(let i = 0; i < myStoredLists.collection.length; i++) {
+        let theList = myStoredLists.collection[i];
+        myLists.add(theList.name);
+
+        for(let j = 0; j < theList.collection.length; j++) {
+            let theItem = theList.collection[j];
+            myLists.collection[i].add(theItem.name);
+        }
+
+        for(let g = 0; g < theList.completedItems.length; g++) {
+            let theItem = theList.completedItems[g];
+            myLists.collection[i].addCompleted(theItem);
+        }
+    }
+    return myLists;
 }
 
 
@@ -36,6 +76,7 @@ function delList(list) {
         }
     }
     setTimeout(function(){
+        saveLists();
         printPage();
     }, 500);
 }
@@ -54,6 +95,7 @@ function delItem(list, item) {
         }
     }
     setTimeout(function(){
+        saveLists();
         printPage();
     }, 500);
 }
@@ -68,12 +110,13 @@ function addCompletedItems(list, item) {
                     $("#list" + i + "item" + j).css("background-color", "#4ef542");
                     $("#list" + i + "item" + j).slideUp("1000");
                     let completedItem = theList.collection.splice(item, 1);
-                    theList.completedItems.push(completedItem[0]);
+                    theList.addCompleted(completedItem[0]);
                 }
             }
         }
     }
     setTimeout(function(){
+        saveLists();
         printPage();
     }, 500);
 }
@@ -87,12 +130,14 @@ function delCompletedItems(list) {
         }
     }
     setTimeout(function(){
+        saveLists();
         printPage();
     }, 500);
 }
 
 
 function printPage() {
+    getLists();
     $(".all-lists").html("");
 
     for (let i = 0; i < myLists.collection.length; i++) {
