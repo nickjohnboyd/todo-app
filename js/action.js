@@ -136,6 +136,7 @@ function addCompletedItems(list, item) {
             for(let j = 0; j < theList.collection.length; j++) {
                 if(j == item) {
                     $("#list" + i + "item" + j).css("background-color", "#4ef542");
+                    $("#list" + i + "item" + j).find(".new-item-name").css("background-color", "#4ef542");
                     $("#list" + i + "item" + j).slideUp("1000");
                     let completedItem = theList.collection.splice(item, 1);
                     theList.addCompleted(completedItem[0]);
@@ -233,7 +234,7 @@ function printPage() {
                     <div class="item-start">
                         <i class="far fa-square" onclick="addCompletedItems(${i}, ${j})"></i>
                         <div class="item-name-cont" onclick="nameToInput(${i}, ${j})">
-                            <div class="item-name">${itemName}</div>
+                            <div class="item-name uncompleted">${itemName}</div>
                         </div>
                     </div>
                     <i class="fas fa-minus" onclick="delItem(${i}, ${j})"></i>

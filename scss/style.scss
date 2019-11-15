@@ -130,7 +130,7 @@ body {
                                    margin-left: 30px;
                                    border: none;
                                }
-                               .item-name:hover {
+                               .uncompleted:hover {
                                    transition: background-color 1s;
                                    background-color: $light-grey;
                                    border-radius: 5px;

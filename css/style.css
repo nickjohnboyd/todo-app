@@ -94,7 +94,7 @@ body {
           height: 33px;
           margin-left: 30px;
           border: none; }
-        .main .content .all-lists .list .item-cont .all-items .item .item-start .item-name:hover {
+        .main .content .all-lists .list .item-cont .all-items .item .item-start .uncompleted:hover {
           transition: background-color 1s;
           background-color: #d3d3d3;
           border-radius: 5px; }
