@@ -108,7 +108,7 @@ body {
                             align-items: center;
                             justify-content: space-between;
                             padding: 10px;
-                            margin-bottom: 10px;
+                            margin-bottom: 5px;
                             border-radius: 5px;
 
                             .item-start {
@@ -122,6 +122,18 @@ body {
                                 }
                                .item-name {
                                    margin-left: 20px;
+                                   padding: 5px 10px;
+                               }
+                               .new-item-name {
+                                   outline: none;
+                                   height: 33px;
+                                   margin-left: 30px;
+                                   border: none;
+                               }
+                               .item-name:hover {
+                                   transition: background-color 1s;
+                                   background-color: $light-grey;
+                                   border-radius: 5px;
                                }
                             }
                             .fa-minus {

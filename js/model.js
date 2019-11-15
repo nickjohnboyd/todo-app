@@ -20,8 +20,8 @@ class List {
     addCompleted(item) {
         this.completedItems.push(item);
     }
-    activate() {
-        this.active = true;
+    moveCompleted(item) {
+        this.collection.push(item);
     }
 }
 

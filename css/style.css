@@ -77,7 +77,7 @@ body {
       align-items: center;
       justify-content: space-between;
       padding: 10px;
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       border-radius: 5px; }
       .main .content .all-lists .list .item-cont .all-items .item .item-start {
         display: flex;
@@ -87,7 +87,17 @@ body {
           font-size: 17px;
           cursor: pointer; }
         .main .content .all-lists .list .item-cont .all-items .item .item-start .item-name {
-          margin-left: 20px; }
+          margin-left: 20px;
+          padding: 5px 10px; }
+        .main .content .all-lists .list .item-cont .all-items .item .item-start .new-item-name {
+          outline: none;
+          height: 33px;
+          margin-left: 30px;
+          border: none; }
+        .main .content .all-lists .list .item-cont .all-items .item .item-start .item-name:hover {
+          transition: background-color 1s;
+          background-color: #d3d3d3;
+          border-radius: 5px; }
       .main .content .all-lists .list .item-cont .all-items .item .fa-minus {
         cursor: pointer; }
     .main .content .all-lists .list .item-cont .all-items .completed .items-completed {

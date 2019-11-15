@@ -25,11 +25,41 @@ function addListFocus() {
 function addItem(event, itemName, i) {
     switch(event.which) {
         case 13:
+            if(itemName == "") {
+                break;
+            }
             myLists.collection[i].add(itemName);
             $(".add-item").val("");
             saveLists();
             printPage();
             $("#list" + i).find(".add-item").focus();
+            break;
+    }
+}
+
+function nameToInput(i, j) {
+    let itemNameCont = $("#list" + i + "item" + j).find(".item-name-cont");
+    itemNameCont.html("");
+    itemNameCont.append(`
+        <input type="text" class="new-item-name" onkeyup="editItem(event, this.value, ${i}, ${j})">
+    `);
+    $("#list" + i + "item" + j).find(".new-item-name").focus();
+
+}
+
+function editItem(event, itemName, i, j) {
+    switch(event.which) {
+        case 13:
+            if(itemName != "") {
+                myLists.collection[i].collection[j].name = itemName;
+            }
+            let itemNameCont = $("#list" + i + "item" + j).find(".item-name-cont");
+            itemNameCont.html("");
+            itemNameCont.append(`
+                <div class="item-name">${itemName}</div>
+            `);          
+            saveLists();
+            printPage();
             break;
     }
 }
@@ -69,7 +99,6 @@ function getLists() {
 function delList(list) {
     for(let i = 0; i < myLists.collection.length; i++) {
         if (i == list) {
-            $("#list" + i).css("background-color", "#00cdff");
             $("#list" + i).slideUp("1000");
             myLists.collection.splice(list, 1);
         }
@@ -134,6 +163,45 @@ function delCompletedItems(list) {
     }, 500);
 }
 
+function moveCompletedItem(list, item) {
+    for(let i = 0; i < myLists.collection.length; i++) {
+        let theList = myLists.collection[i];
+        if(i == list) {
+            for(let j = 0; j < theList.completedItems.length; j++) {
+                if(j == item) {
+                    $("#completed-list" + i + "item" + j).css("background-color", "#ffc107");
+                    $("#completed-list" + i + "item" + j).slideUp("1000");
+                    let completedItem = theList.completedItems.splice(item, 1);
+                    theList.moveCompleted(completedItem[0]);
+                }
+            }
+        }
+    }
+    setTimeout(function(){
+        saveLists();
+        printPage();
+    }, 500);
+}
+
+function delOneCompletedItem(list, item) {
+    for(let i = 0; i < myLists.collection.length; i++) {
+        let theList = myLists.collection[i];
+        if(i == list) {
+            for(let j = 0; j < theList.completedItems.length; j++) {
+                if(j == item) {
+                    $("#completed-list" + i + "item" + j).css("background-color", "#ff4545");
+                    $("#completed-list" + i + "item" + j).slideUp("1000");
+                    theList.completedItems.splice(item, 1);
+                }
+            }
+        }
+    }
+    setTimeout(function(){
+        saveLists();
+        printPage();
+    }, 500);
+}
+
 
 function printPage() {
     getLists();
@@ -164,7 +232,9 @@ function printPage() {
                 <div class="item" id="${theItem.id}">
                     <div class="item-start">
                         <i class="far fa-square" onclick="addCompletedItems(${i}, ${j})"></i>
-                        <div class="item-name" contenteditable="false">${itemName}</div>
+                        <div class="item-name-cont" onclick="nameToInput(${i}, ${j})">
+                            <div class="item-name">${itemName}</div>
+                        </div>
                     </div>
                     <i class="fas fa-minus" onclick="delItem(${i}, ${j})"></i>
                 </div>
@@ -178,10 +248,10 @@ function printPage() {
             completed += `
                 <div class="item checked-off" id="${theItem.id}">
                     <div class="item-start">
-                        <i class="far fa-check-square" onclick="addCompletedItems(${i}, ${g})"></i>
-                        <div class="item-name" contenteditable="false">${itemName}</div>
+                        <i class="far fa-check-square" onclick="moveCompletedItem(${i}, ${g})"></i>
+                        <div class="item-name">${itemName}</div>
                     </div>
-                    <i class="fas fa-minus""></i>
+                    <i class="fas fa-minus" onclick="delOneCompletedItem(${i}, ${g})"></i>
                 </div>
             `;
         }
